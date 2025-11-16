@@ -10,7 +10,7 @@ export default function Header() {
 
         <div className="nav-right">
           <Link href="/">Home</Link>
-          <Link href="/search">Catalog</Link>
+          <Link href="/catalog">Catalog</Link>
           <Link href="/membership">Membership</Link>
           <Link href="/reservation">Reservation</Link>
           <Link href="/wishlist">Wishlist</Link>
@@ -26,4 +26,3 @@ export default function Header() {
     </header>
   );
 }
-
