@@ -1,11 +1,13 @@
+
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --brand-strong: #111;
+  --accent-yellow-1: #ffcc00;
+  --accent-yellow-2: #ffd86b;
 }
-
-
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -14,275 +16,62 @@
   }
 }
 
+html, body, #__next {
+  height: 100%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-
-
-/* About Page */
-.about-page {
-  background-color: transparent; 
-  padding: 2rem 0;
-  min-height: 100vh;
-  color: #ffffff; 
+/* small global accessibility helpers */
+a:focus, button:focus, input:focus, textarea:focus {
+  outline-offset: 2px;
+  outline: 3px solid rgba(0, 0, 0, 0.06);
 }
-.about-container {
+
+/* site layout helpers used by multiple pages/components */
+.container {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 1rem;
-}
-.about-container h1 {
-  margin-bottom: 1.5rem;
-  font-size: 1.9rem;
-  color: #ffffff;
-  text-align: left;
+  box-sizing: border-box;
 }
 
-/* responsive grid for team cards */
-.about-team {
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: 1fr;
+/* keep site header/footer base styling global because Header/Footer are shared */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--brand-strong);
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-/* team member cards */
-.about-card {
-  background: rgba(255, 255, 255, 0.05); /* subtle translucent white */
-  border-radius: 10px;
-  padding: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-  transition: transform 180ms ease, box-shadow 180ms ease, border 180ms ease;
+.site-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
 }
-.about-card:hover,
-.about-card:focus-within {
-  transform: translateY(-4px);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.6);
-}
-.about-card h2 {
-  margin: 0;
+
+.nav-left .brand {
   font-size: 1.25rem;
-  color: #ffffff;
-}
-.about-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 0.5rem 0 0;
-  display: grid;
-  gap: 0.4rem;
-  font-size: 0.98rem;
-}
-.about-card li strong {
-  display: inline-block;
-  width: 6.5rem;
-  color: #dbeafe; 
-}
-.about-card li {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  align-items: baseline;
-  color: #ffffff;
-}
-
-/* responsive breakpoints */
-@media (min-width: 600px) {
-  .about-team {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (min-width: 900px) {
-  .about-team {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-@media (min-width: 1200px) {
-  .about-team {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-
-
-/* Contact Page */
-.contact-page,
-.contact-form-section {
-  color: #fff;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-}
-
-/* center the form */
-.contact-page .contact-form-section,
-.contact-form-section {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 1.25rem;
-  box-sizing: border-box;
-}
-
-/* heading */
-.contact-page .contact-form-section h2,
-.contact-form-section h2 {
-  margin: 0 0 0.5rem;
-  font-size: 1.6rem;
-  color: #ffffff;
-}
-
-/* intro text */
-.contact-page .contact-form-section p,
-.contact-form-section p {
-  margin: 0 0 1rem;
-  color: rgba(255,255,255,0.85);
-}
-
-/* form wrapper */
-.contact-page .contact-form {
-  display: grid;
-  gap: 0.85rem;
-  grid-template-columns: 1fr;
-  background: rgba(255,255,255,0.02); /* subtle panel */
-  padding: 1rem;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.06);
-}
-
-/* make two-column layout on medium+ screens */
-@media (min-width: 760px) {
-  .contact-page .contact-form,
-  .contact-form {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-  }
-}
-
-/*  message text area span full width on wider screens */
-@media (min-width: 760px) {
-  .contact-page .contact-form .full,
-  .contact-form .full {
-    grid-column: 1 / -1;
-  }
-}
-
-/* label and input container */
-.contact-page .contact-form label,
-.contact-form label {
-  display: block;
-  font-weight: 600;
-  color: rgba(255,255,255,0.95);
-  margin-bottom: 0.35rem;
-  font-size: 0.95rem;
-}
-
-/* inputs and text area */
-.contact-page .contact-form input[type="text"],
-.contact-page .contact-form input[type="email"],
-.contact-page .contact-form input[type="tel"],
-.contact-page .contact-form textarea,
-.contact-form input[type="text"],
-.contact-form input[type="email"],
-.contact-form input[type="tel"],
-.contact-form textarea {
-  width: 100%;
-  padding: 0.65rem 0.8rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(0,0,0,0.38); 
-  color: #fff;
-  box-sizing: border-box;
-  resize: vertical;
-  min-height: 44px;
-  font-size: 0.96rem;
-}
-
-/* larger text area */
-.contact-page .contact-form textarea,
-.contact-form textarea {
-  min-height: 130px;
-}
-
-/* input focus  */
-.contact-page .contact-form input:focus,
-.contact-page .contact-form textarea:focus,
-.contact-form input:focus,
-.contact-form textarea:focus {
-  outline: 3px solid rgba(255,255,255,0.12);
-  border-color: rgba(255,255,255,0.7);
-  background: rgba(255,255,255,0.03);
-}
-
-/* submit button appears full width on mobile, auto on desktop */
-.contact-page .contact-form button[type="submit"],
-.contact-form button[type="submit"] {
-  grid-column: 1 / -1;
-  justify-self: start;
-  padding: 0.7rem 1rem;
-  background: linear-gradient(90deg, #ffcc00, #ffd86b);
-  color: #04284b;
   font-weight: 700;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 120ms ease, box-shadow 120ms ease;
+  color: #fff;
+  text-decoration: none;
 }
 
-/* make button inline on wider screens  */
-@media (min-width: 760px) {
-  .contact-page .contact-form button[type="submit"],
-  .contact-form button[type="submit"] {
-    grid-column: auto;
-    justify-self: end;
-    align-self: end;
-    padding: 0.6rem 1rem;
-  }
-}
-.contact-page .contact-form button[type="submit"]:hover,
-.contact-form button[type="submit"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(255,204,51,0.18);
-}
-
-/* Status message success / error */
-#form-status {
-  margin-top: 0.6rem;
-  font-weight: 600;
-}
-#form-status.success {
-  color: #bbf7d0; 
-}
-#form-status.error {
-  color: #ffb4b4; 
-}
-.contact-page .muted,
-.contact-form .muted {
-  color: rgba(255,255,255,0.7);
-  font-size: 0.95rem;
-}
-/* accessibility */
-a:focus,
-button:focus,
-input:focus,
-textarea:focus {
-  outline-offset: 2px;
-}
-.contact-page .contact-form .field {
-  display: flex;
-  flex-direction: column;
-}
-/* ensure images don't overflow in cards if added later */
-.about-card img,
-.about-card .avatar {
+/* default utility for avatars used in some cards */
+.avatar {
   width: 64px;
   height: 64px;
   border-radius: 999px;
   object-fit: cover;
-  margin-right: 0.75rem;
-}
-@media (max-width: 480px) {
-  .about-container, .contact-page .contact-form-section {
-    padding: 0 0.75rem;
-  }
 }

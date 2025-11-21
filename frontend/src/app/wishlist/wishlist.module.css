@@ -1,0 +1,278 @@
+/* wishlist.module.css — merged & cleaned version
+   - Keeps both kebab-case and camelCase class names (so existing JSX won't break)
+   - Preserves `composes: container;` for the container rule
+   - Grouped/merged duplicate selectors and added small comments for clarity
+*/
+
+/* page wrapper */
+.wishlist-page,
+.wishlistPage {
+  padding: 2rem 0;
+  min-height: 60vh;
+}
+
+/* container & heading */
+.wishlist-container,
+.wishlistContainer {
+  /* relies on global .container defined in globals.css (if present) */
+  display: grid;
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #fff;
+  display: grid;
+  gap: 1rem;
+}
+
+.wishlistHeading,
+.wishlist-heading {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: inherit;
+}
+
+/* list / grid layout (one or the other can be used) */
+.wishlist-list,
+.wishlistList,
+.wishlistGrid,
+.wishlist-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+/* responsive grid breakpoints */
+@media (min-width: 700px) {
+  .wishlistGrid,
+  .wishlistList,
+  .wishlist-list,
+  .wishlist-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1000px) {
+  .wishlistGrid,
+  .wishlistList,
+  .wishlist-list,
+  .wishlist-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1400px) {
+  .wishlistGrid,
+  .wishlistList,
+  .wishlist-list,
+  .wishlist-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* minimal list-card style (for compact list view) */
+.wishlist-item,
+.wishlistItem {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background: rgba(255,255,255,0.02);
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.wishlist-item .meta,
+.wishlistItem .meta {
+  flex: 1;
+}
+
+.wishlist-item h3,
+.wishlistItem h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.wishlist-item .actions,
+.wishlistItem .actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* danger button used in list */
+.button--danger,
+.buttonDanger {
+  background: transparent;
+  color: #ff6b6b;
+  border: 1px solid rgba(255,107,107,0.18);
+  padding: 0.5rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* --- Card-based grid (visual cards) --- */
+.wishlistCard,
+.wishlist-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.wishlistThumb,
+.wishlist-thumb {
+  position: relative; /* required if using next/image with fill */
+  width: 100%;
+  height: 400px;
+  background: rgba(255,255,255,0.05);
+}
+
+.wishlistPlaceholder,
+.wishlist-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255,255,255,0.6);
+  height: 100%;
+}
+
+.wishlistCardBody,
+.wishlist-card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 120px;
+}
+
+.wishlistTitle,
+.wishlist-title {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.wishlistMeta,
+.wishlist-meta {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.8);
+  margin: 0.15rem 0;
+}
+
+.wishlistDescription,
+.wishlist-description {
+  margin-top: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* actions inside cards */
+.wishlistActions,
+.wishlist-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: auto; /* push to bottom of card */
+}
+
+.wishlistButton,
+.wishlist-button {
+  background: #ffd35c;
+  border: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #000;
+}
+
+.wishlistButtonOutline,
+.wishlist-button-outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* plus card (to add new items) */
+.wishlistPlusCard,
+.wishlist-plus-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: background 0.2s;
+}
+
+.wishlistPlusCard:hover,
+.wishlist-plus-card:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.plusWrapper,
+.plus-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 56px;
+  color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.03);
+  border-radius: 6px;
+}
+
+/* empty / loading states */
+.wishlistCenter,
+.wishlist-center {
+  padding: 2rem;
+  text-align: center;
+  color: #fff;
+}
+
+.wishlistCenterError,
+.wishlist-center-error {
+  padding: 2rem;
+  text-align: center;
+  color: #ff9c9c;
+}
+
+/* push plus card to end when items exist (useful when using flex / order) */
+.hasItems .wishlistPlusCard,
+.hasItems .wishlist-plus-card {
+  order: 99;
+}
+
+/* small utilities for images (avatars / thumbnails) */
+.wishlistThumb img,
+.wishlistThumb :where(img),
+.wishlistThumb .avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* responsive tweaks for smaller screens */
+@media (max-width: 480px) {
+  .wishlist-container,
+  .wishlistContainer {
+    padding: 1rem;
+  }
+
+  .wishlistThumb,
+  .wishlist-thumb {
+    height: 300px;
+  }
+
+  .plusWrapper,
+  .plus-wrapper {
+    font-size: 48px;
+  }
+}

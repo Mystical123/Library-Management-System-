@@ -3,6 +3,9 @@ import { FormEvent, useState } from "react";
 import emailjs from "emailjs-com";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import styles from "./contact.module.css";
+
+// using emailjs to handle all emails 
 
 export default function ContactPage() {
   const [status, setStatus] = useState<string>("");
@@ -15,10 +18,10 @@ export default function ContactPage() {
 
     emailjs
       .sendForm(
-        "service_wp5032e", // Your Service ID
-        "template_0kqcepg", // Your Template ID
+        "service_wp5032e", // Service ID
+        "template_0kqcepg", // Template ID
         form,
-        "KyHI9y3Pnfv8APkGw" // Your Public Key
+        "KyHI9y3Pnfv8APkGw" // Public Key
       )
       .then(
         (result) => {
@@ -39,7 +42,7 @@ export default function ContactPage() {
     <>
       <Header />
 
-      <main className="contact-page">
+      <main className={styles["contact-page"]}>
         <section className="contact-form-section">
           <h2>Contact Us</h2>
           <p>

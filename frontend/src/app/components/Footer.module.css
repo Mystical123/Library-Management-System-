@@ -1,0 +1,48 @@
+/* footer-specific styles */
+.site-footer {
+  background-color: var(--brand-strong);
+  color: #fff;
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.site-footer .social {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.site-footer .social a img {
+  width: 24px;
+  height: 24px;
+  filter: grayscale(100%);
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.site-footer .social a img:hover {
+  filter: grayscale(0%);
+  transform: scale(1.2);
+}
+
+.footer-text {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.social-icons a img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  background: transparent;
+  border-radius: 4px;
+  filter: invert(1);
+  transition: transform 0.2s, filter 0.2s;
+}
+.social-icons a img:hover {
+  transform: scale(1.15);
+  filter: invert(0.7);
+}

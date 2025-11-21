@@ -1,0 +1,30 @@
+/* styles specific to Header component */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.nav-right a, .nav-right button {
+  background: #fff;
+  color: var(--brand-strong);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-right a:hover, .nav-right button:hover {
+  background: #ffd35c;
+  color: #000;
+}
+
+button.ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+}

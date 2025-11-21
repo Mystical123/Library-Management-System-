@@ -1,0 +1,115 @@
+/* styles for Contact page only */
+.contact-page {
+  color: #fff;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  padding: 2rem 0;
+}
+
+.contact-form-section {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.25rem;
+  box-sizing: border-box;
+}
+
+.contact-form-section h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.6rem;
+  color: #ffffff;
+}
+
+.contact-form-section p {
+  margin: 0 0 1rem;
+  color: rgba(255,255,255,0.85);
+}
+
+.contact-form {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: 1fr;
+  background: rgba(255,255,255,0.02);
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* medium+ two-column */
+@media (min-width: 760px) {
+  .contact-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .contact-form .full { grid-column: 1 / -1; }
+}
+
+/* labels & inputs */
+.contact-form label {
+  display: block;
+  font-weight: 600;
+  color: rgba(255,255,255,0.95);
+  margin-bottom: 0.35rem;
+  font-size: 0.95rem;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.38);
+  color: #fff;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 44px;
+  font-size: 0.96rem;
+}
+
+.contact-form textarea { min-height: 130px; }
+
+.contact-form input:focus, .contact-form textarea:focus {
+  outline: 3px solid rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.03);
+}
+
+.contact-form button[type="submit"] {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 0.7rem 1rem;
+  background: linear-gradient(90deg, var(--accent-yellow-1), var(--accent-yellow-2));
+  color: #04284b;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+/* small utility classes  */
+.muted {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.95rem;
+}
+.success {
+  color: #bbf7d0; /* green-ish */
+}
+.error {
+  color: #ffb4b4; /* red-ish */
+}
+
+
+@media (min-width: 760px) {
+  .contact-form button[type="submit"] {
+    grid-column: auto;
+    justify-self: end;
+    align-self: end;
+    padding: 0.6rem 1rem;
+  }
+}
+
+#form-status { margin-top: 0.6rem; font-weight: 600; }
+#form-status.success { color: #bbf7d0; }
+#form-status.error { color: #ffb4b4; }
