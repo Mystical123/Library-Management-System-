@@ -43,7 +43,7 @@ export default function AboutPage() {
                 <strong>Skills:</strong> C++, Java, HTML, CSS, SQL
               </li>
               <li>
-                <strong>Experience:</strong> Frontend & UI design for Project
+                <strong>Experience:</strong> Frontend & UI design, for Project
                 Delta
               </li>
             </ul>
@@ -101,6 +101,41 @@ export default function AboutPage() {
           </article>
 
           {/* Add more teammates here if needed */}
+
+          {/* David */}
+          <article className="card">
+            <h3 className="about-card-name">David Stelzer</h3>
+            <ul className="about-card-list">
+              <li>
+                <strong>Education:</strong> Pursuing B.S. Computer Science,
+                Sacramento State
+              </li>
+              <li>
+                <strong>Skills:</strong> N/A
+              </li>
+              <li>
+                <strong>Experience:</strong> N/A
+              </li>
+            </ul>
+          </article>
+
+            {/* Gabriel */}
+          <article className="card">
+            <h3 className="about-card-name">Gabriel Batarseh</h3>
+            <ul className="about-card-list">
+              <li>
+                <strong>Education:</strong> Pursuing B.S. Computer Science,
+                Sacramento State
+              </li>
+              <li>
+                <strong>Skills:</strong> N/A
+              </li>
+              <li>
+                <strong>Experience:</strong> N/A
+              </li>
+            </ul>
+          </article>
+
         </div>
       </section>
     </div>

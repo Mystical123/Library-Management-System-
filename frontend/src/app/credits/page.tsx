@@ -1,10 +1,12 @@
 export default function CreditsPage() {
   const members = [
-    { name: "Iesha Khabra", role: "Frontend & documentation" },
-    { name: "Sukhdip Sandhu", role: "Frontend & UI design" },
-    { name: "Dino Velagic", role: "Backend routes & DB" },
-    { name: "Andy Wong", role: "Backend structure" },
-    { name: "Andrew Jones", role: "Testing & QA" },
+    { name: "Iesha Khabra", role: "Frontend and Backend Developer" },
+    { name: "Sukhdip Sandhu", role: "Project Manager, Designer, Frontend & UI design Developer" },
+    { name: "Dino Velagic", role: "Frontend Developer" },
+    { name: "Andy Wong", role: "Backend Developer" },
+    { name: "Andrew Jones", role: "Designer" },
+    { name: "David Stelzer", role: "Quality Control"}, 
+    { name: "Gabriel Batarseh", role: "Analyst"}, 
   ];
 
   return (
