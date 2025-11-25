@@ -19,8 +19,8 @@ router.get("/", async (req, res) =>
 {
   try 
   {
-    const [rows] = await pool.query("SELECT * FROM notifications ORDER BY id DESC");
-    res.json([]);
+    const [rows] = await pool.query("SELECT * FROM notifications ORDER BY created_at DESC");
+    res.json(rows);
   } catch (err) 
   {
     console.error("Error listing notifications:", err);
@@ -30,27 +30,35 @@ router.get("/", async (req, res) =>
 
 router.get("/:id", async (req, res) => 
 {
-  try 
+ try 
   {
-    const id = req.params.id;
-    const [rows] = await pool.query("SELECT * FROM notifications WHERE id = ?", [id]);
-    if (!rows.length) return res.status(404).json({ error: "Notification not found" });
-    res.json({ id });
+    const userId = req.params.userId;
+    const [rows] = await pool.query("SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC",[userId]);
+    res.json(rows);
   } catch (err) 
   {
-    console.error("Error fetching notification:", err);
-    res.status(500).json({ error: "Failed to fetch notification" });
+    console.error("Error fetching notifications for user:", err);
+    res.status(500).json({ error: "Failed to fetch notifications for user" });
   }
 });
 
-router.post("/", async (req, res) => 
-{
+outer.post("/", async (req, res) => 
+  {
   try 
   {
-    const data = req.body;
-    const [result] = await pool.query("INSERT INTO notifications SET ?", [data]);
-    res.status(201).json({ id: result.insertId, ...data });
-    res.status(201).json(data);
+    const { user_id, message } = req.body;
+    if (!user_id || !message) 
+    {
+      return res.status(400).json({ error: "user_id and message are required" });
+    }
+    const [result] = await pool.query("INSERT INTO notifications (user_id, message) VALUES (?, ?)",[user_id, message]);
+    res.status(201).json
+    ({
+      id: result.insertId,
+      user_id,
+      message,
+      is_read: 0,
+    });
   } catch (err) 
   {
     console.error("Error creating notification:", err);
@@ -58,14 +66,12 @@ router.post("/", async (req, res) =>
   }
 });
 
-router.put("/:id", async (req, res) =>
-{
+router.put("/:id/read", async (req, res) => {
   try 
   {
     const id = req.params.id;
-    const data = req.body;
-    await pool.query("UPDATE notifications SET ? WHERE id = ?", [data, id]);
-    res.json({ id, ...data });
+    await pool.query("UPDATE notifications SET is_read = 1 WHERE id = ?", [id]);
+    res.json({ ok: true });
   } catch (err) 
   {
     console.error("Error updating notification:", err);
