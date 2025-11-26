@@ -8,6 +8,10 @@ const cors = require("cors");
 const booksRoutes = require("./routes/books");
 const wishlistRoutes = require("./routes/wishlist");
 const searchRoutes = require("./routes/search");
+const adminRoutes = require("./routes/admin");
+const userRoutes = require("./routes/user");
+const notificationRoutes = require("./routes/notification");
+const reservationRoutes = require("./routes/reservation");
 
 app.use(cors());
 app.use(express.json());
@@ -29,6 +33,10 @@ app.get("/test", (req, res) => {
 app.use("/api/books", booksRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/search", searchRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/notification", notificationRoutes);
+app.use("/api/reservation", reservationRoutes);
 
 
 app.listen(3001, () => console.log("Backend running on 3001"));
