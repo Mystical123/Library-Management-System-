@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Book } from "../types";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import styles from "./catalog.module.css";
 
 export default function CatalogPage() {
@@ -19,13 +17,13 @@ export default function CatalogPage() {
   const [field, setField] = useState<"all" | "title" | "author" | "genre">("all");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-  // Debounce search input
+  // Debounce search
   useEffect(() => {
     const timeout = setTimeout(() => setDebouncedQuery(query.trim()), 300);
     return () => clearTimeout(timeout);
   }, [query]);
 
-  // Fetch books (all or search)
+  // Fetch books + wishlist
   useEffect(() => {
     const controller = new AbortController();
 
@@ -46,7 +44,7 @@ export default function CatalogPage() {
         const data: Book[] = await res.json();
         setBooks(data);
 
-        // fetch wishlist
+        // Fetch wishlist
         const wishlistRes = await fetch("/api/wishlist");
         if (wishlistRes.ok) {
           const wishlistData: { book_id: number }[] = await wishlistRes.json();
@@ -106,8 +104,6 @@ export default function CatalogPage() {
 
   return (
     <>
-      <Header />
-
       {/* Modal */}
       {selectedBook && (
         <div
@@ -230,8 +226,6 @@ export default function CatalogPage() {
           ))}
         </div>
       </main>
-
-      <Footer />
     </>
   );
 }

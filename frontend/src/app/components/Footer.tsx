@@ -23,7 +23,7 @@ export default function Footer() {
           />
         </a>
         <a
-          href="https://github.com/P-Delta/Library-Management"
+          href="https://github.com/Mystical123/Library-Management-System-/tree/ui-update"
           target="_blank"
           rel="noopener noreferrer"
         >

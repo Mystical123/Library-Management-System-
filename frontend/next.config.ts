@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   /* for images in catalog */
   reactStrictMode: true,
   images: {
-    domains: ["m.media-amazon.com"],
+    domains: ["m.media-amazon.com", "example.com"],
   },
 };
 

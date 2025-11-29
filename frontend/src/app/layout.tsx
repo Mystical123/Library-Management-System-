@@ -46,7 +46,7 @@ export default function RootLayout({
                 <a href="https://linkedin.com" target="_blank">
                   LinkedIn
                 </a>
-                <a href="https://github.com" target="_blank">
+                <a href="https://github.com/Mystical123/Library-Management-System-/tree/ui-update" target="_blank">
                   GitHub
                 </a>
                 <a href="https://facebook.com" target="_blank">
@@ -55,7 +55,7 @@ export default function RootLayout({
                 <a href="https://twitter.com" target="_blank">
                   Twitter
                 </a>
-                <a href="https://instagram.com" target="_blank">
+                <a href="https://www.instagram.com/project_delta_csus/" target="_blank">
                   Instagram
                 </a>
               </div>
