@@ -1,0 +1,76 @@
+/* ===== FOOTER (LIGHT THEME) ===== */
+
+.siteFooter {
+  background-color: var(--bg-ivory);
+  color: #000; /* black text */
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-top: 1px solid #e5e5e5; /* subtle divider */
+}
+
+/* Footer text */
+.footerText {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Social icon row */
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+/* Icons inside the first row */
+.social a img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* Hover effect (no grayscale) */
+.social a img:hover {
+  transform: scale(1.15);
+  opacity: 0.75;
+}
+
+/* Secondary icon row (if used) */
+.socialIcons {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+/* Icons inside the secondary row */
+.socialIcons a img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.socialIcons a img:hover {
+  transform: scale(1.15);
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .siteFooter {
+    padding: 1.5rem 1rem;
+    gap: 1rem;
+  }
+
+  .social a img,
+  .socialIcons a img {
+    width: 24px;
+    height: 24px;
+  }
+}

@@ -1,0 +1,91 @@
+/* ===== HEADER MODULE CSS ===== */
+
+/* Header container */
+.siteHeader {
+  border-bottom: 1px solid var(--border-sand, #e0d2b6);
+  background-color: var(--bg-ivory, #f6f1e8);
+  color: var(--deep-brown, #2e241a);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Navigation layout */
+.siteNav {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Left side - logo */
+.navLeft .siteLogo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  text-decoration: none;
+}
+
+.siteLogoTitle {
+  font-size: 1.25rem; /* larger than subtitle */
+  font-weight: 700;
+  color: #7c3aed; /* purple color from his header */
+}
+
+.siteLogoSubtitle {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--deep-brown, #2e241a);
+  margin-top: -2px;
+}
+
+/* Right side - links and buttons */
+.navRight {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Right side links */
+.navRight a {
+  background: transparent;
+  color: var(--deep-brown, #2e241a);
+  text-decoration: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.navRight a:hover {
+  background: var(--bg-sand, #e4d5b7);
+  color: var(--deep-brown, #2e241a);
+}
+
+/* Ghost buttons for login/cart */
+.ghost {
+  background: transparent;
+  color: var(--deep-brown, #2e241a);
+  border: 1px solid var(--deep-brown, #2e241a);
+  border-radius: 6px;
+  padding: 0.45rem 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.ghost:hover {
+  background: var(--bg-sand, #e4d5b7);
+  color: var(--deep-brown, #2e241a);
+}
+
+/* Cart count badge */
+#cart-count {
+  margin-left: 0.25rem;
+  font-weight: 600;
+}

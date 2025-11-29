@@ -9,10 +9,22 @@
   --card-bg: #fbf6ed;
 }
 
+<<<<<<< HEAD
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+=======
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+>>>>>>> origin/main
+}
+
+html, body, #__next {
+  height: 100%;
 }
 
 body {
@@ -23,6 +35,7 @@ body {
   color: var(--deep-brown);
 }
 
+<<<<<<< HEAD
 /* App shell */
 
 .app-body {
@@ -506,3 +519,57 @@ body {
   border-radius: 0.5rem;
   background: var(--ivory);
 }
+=======
+/* small global accessibility helpers */
+a:focus, button:focus, input:focus, textarea:focus {
+  outline-offset: 2px;
+  outline: 3px solid rgba(0, 0, 0, 0.06);
+}
+
+/* default link color update */
+a {
+  color: var(--deep-brown);
+}
+
+/* site layout helpers used by multiple pages/components */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* keep site header/footer base styling global */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--brand-strong); /* you can change this to match teammate if needed */
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: var(--foreground);
+}
+
+.site-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-left .brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* default utility for avatars used in some cards */
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+>>>>>>> origin/main
