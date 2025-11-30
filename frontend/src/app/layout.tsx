@@ -43,16 +43,16 @@ export default function RootLayout({
             <div className="site-footer-inner">
               <p>© {new Date().getFullYear()} Project Delta · CSC 131</p>
               <div className="site-footer-links">
-                <a href="https://linkedin.com" target="_blank">
+                <a href="https://www.linkedin.com/in/project-delta-608060393/" target="_blank">
                   LinkedIn
                 </a>
                 <a href="https://github.com/Mystical123/Library-Management-System-/tree/ui-update" target="_blank">
                   GitHub
                 </a>
-                <a href="https://facebook.com" target="_blank">
+                <a href="https://www.facebook.com/profile.php?id=61584333397300" target="_blank">
                   Facebook
                 </a>
-                <a href="https://twitter.com" target="_blank">
+                <a href="https://x.com/PDelta1231" target="_blank">
                   Twitter
                 </a>
                 <a href="https://www.instagram.com/project_delta_csus/" target="_blank">
