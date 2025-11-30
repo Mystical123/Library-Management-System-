@@ -37,16 +37,18 @@ router.post("/", async (req, res) => {
     const { book_id } = req.body;
     if (!book_id) return res.status(400).json({ error: "book_id required" });
 
+    // Corrected query — only insert book_id
     await pool.query(
-      `INSERT INTO wishlist (user_id, book_id) VALUES (NULL, ?)
+      `INSERT INTO wishlist (book_id) VALUES (?)
        ON DUPLICATE KEY UPDATE added_at = CURRENT_TIMESTAMP`,
       [book_id]
     );
 
+    // Return the inserted row
     const [rows] = await pool.query(
       `SELECT w.id AS wishlist_id, b.*
        FROM wishlist w JOIN books b ON b.id = w.book_id
-       WHERE w.book_id = ? AND w.user_id IS NULL`,
+       WHERE w.book_id = ?`,
       [book_id]
     );
 

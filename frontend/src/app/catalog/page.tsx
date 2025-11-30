@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Book } from "../types";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import styles from "./catalog.module.css";
 
 export default function CatalogPage() {
@@ -19,13 +17,13 @@ export default function CatalogPage() {
   const [field, setField] = useState<"all" | "title" | "author" | "genre">("all");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-  // Debounce search input
+  // Debounce search
   useEffect(() => {
     const timeout = setTimeout(() => setDebouncedQuery(query.trim()), 300);
     return () => clearTimeout(timeout);
   }, [query]);
 
-  // Fetch books (all or search)
+  // Fetch books + wishlist
   useEffect(() => {
     const controller = new AbortController();
 
@@ -46,7 +44,7 @@ export default function CatalogPage() {
         const data: Book[] = await res.json();
         setBooks(data);
 
-        // fetch wishlist
+        // Fetch wishlist
         const wishlistRes = await fetch("/api/wishlist");
         if (wishlistRes.ok) {
           const wishlistData: { book_id: number }[] = await wishlistRes.json();
@@ -80,12 +78,19 @@ export default function CatalogPage() {
         body: JSON.stringify({ book_id: bookId }),
       });
       if (!res.ok) throw new Error("Failed to add");
+
+      // local update so button shows "Added" immediately
       setWishlistIds(new Set([...wishlistIds, bookId]));
+
+      // notify other components/pages in this tab to refresh their data
+      window.dispatchEvent(new Event("wishlist:changed"));
     } catch (err: unknown) {
       console.error(err);
       alert("Could not add to wishlist");
     }
   };
+
+
 
   const renderWishlistButton = (book: Book) => {
     const added = wishlistIds.has(book.id);
@@ -106,9 +111,7 @@ export default function CatalogPage() {
 
   return (
     <>
-      <Header />
-
-      {/* Modal for selected book */}
+      {/* Modal */}
       {selectedBook && (
         <div
           className={styles.catalogOverlay}
@@ -131,12 +134,14 @@ export default function CatalogPage() {
                 <div className={styles.catalogPlaceholder}>No image</div>
               )}
             </div>
+
             <div className={styles.modalBody}>
               <h2 className={styles.catalogTitle}>{selectedBook.title}</h2>
               <p className={styles.catalogMeta}><strong>Author:</strong> {selectedBook.author}</p>
               <p className={styles.catalogMeta}><strong>Genre:</strong> {selectedBook.genre}</p>
               <p className={styles.catalogMeta}><strong>Year:</strong> {selectedBook.year_published}</p>
               <p className={styles.catalogDescription}>{selectedBook.description}</p>
+
               <div className={styles.catalogActions}>
                 <button className={styles.catalogButton} onClick={closeModal}>Hide details</button>
                 {renderWishlistButton(selectedBook)}
@@ -147,43 +152,46 @@ export default function CatalogPage() {
         </div>
       )}
 
+      {/* Main catalog */}
       <main className={styles.catalogContainer}>
         <h1 className={styles.catalogHeading}>Catalog</h1>
 
         {/* Search bar */}
-        <div className={styles.catalogSearchBar} role="search" aria-label="Search books">
+        <div className={styles.catalogSearchBar}>
           <input
             className={styles.catalogSearchInput}
             type="search"
-            placeholder="Search by title, author, or genre..."
+            placeholder="Search by title, author, or genre…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            aria-label="Search books"
           />
+
           <select
             className={styles.catalogSelect}
             value={field}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
               setField(e.target.value as "all" | "title" | "author" | "genre")
             }
-            aria-label="Search field"
           >
             <option value="all">All</option>
             <option value="title">Title</option>
             <option value="author">Author</option>
             <option value="genre">Genre</option>
           </select>
+
           <button
             className={styles.catalogClearButton}
-            onClick={() => { setQuery(""); setDebouncedQuery(""); setField("all"); }}
-            aria-label="Clear search"
-            title="Clear"
+            onClick={() => {
+              setQuery("");
+              setDebouncedQuery("");
+              setField("all");
+            }}
           >
             Clear
           </button>
         </div>
 
-        {/* Book grid */}
+        {/* Book Grid */}
         <div className={styles.catalogGrid}>
           {books.map((book) => (
             <article className={styles.catalogCard} key={book.id}>
@@ -200,18 +208,23 @@ export default function CatalogPage() {
                   <div className={styles.catalogPlaceholder}>No image</div>
                 )}
               </div>
+
               <div className={styles.catalogCardBody}>
                 <h2 className={styles.catalogTitle}>{book.title}</h2>
                 <p className={styles.catalogMeta}><strong>Author:</strong> {book.author}</p>
                 <p className={styles.catalogMeta}><strong>Genre:</strong> {book.genre}</p>
                 <p className={styles.catalogMeta}><strong>Year:</strong> {book.year_published}</p>
                 <p className={styles.catalogDescription}>
-                  {book.description?.length > 220 ? `${book.description.slice(0, 220)}…` : book.description}
+                  {book.description?.length > 220
+                    ? `${book.description.slice(0, 220)}…`
+                    : book.description}
                 </p>
+
                 <div className={styles.catalogActions}>
                   <button className={styles.catalogButton} onClick={() => toggleModal(book)}>
                     {selectedBook && selectedBook.id === book.id ? "Hide details" : "Details"}
                   </button>
+
                   {renderWishlistButton(book)}
                   <button className={styles.catalogButtonOutline}>Add to Cart</button>
                 </div>
@@ -220,8 +233,6 @@ export default function CatalogPage() {
           ))}
         </div>
       </main>
-
-      <Footer />
     </>
   );
 }

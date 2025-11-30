@@ -1,13 +1,12 @@
 "use client";
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Book } from "../types";
 import styles from "./wishlist.module.css";
 
+// Extend Book type with wishlist_id from backend
 type WishlistItem = Book & { wishlist_id: number };
 
 export default function WishlistPage() {
@@ -15,12 +14,12 @@ export default function WishlistPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // fetch wishlist items from api
+  // Load wishlist items from backend
   const fetchWishlist = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/wishlist");
-      if (!res.ok) throw new Error("Failed to fetch");
+      const res = await fetch("/api/wishlist", { cache: "no-store" });
+      if (!res.ok) throw new Error("Failed to fetch wishlist");
       const data: WishlistItem[] = await res.json();
       setItems(data);
     } catch (e) {
@@ -31,84 +30,122 @@ export default function WishlistPage() {
     }
   };
 
-  // load the wishlist when page first loads
   useEffect(() => {
     fetchWishlist();
   }, []);
 
-  // remove element from wishlist
+  // Listen for wishlist changes dispatched from other pages/components
+  useEffect(() => {
+    const onWishlistChanged = () => {
+      fetchWishlist();
+    };
+    window.addEventListener("wishlist:changed", onWishlistChanged);
+    return () => window.removeEventListener("wishlist:changed", onWishlistChanged);
+  }, []);
+
+  // Remove an item from wishlist
   const remove = async (wishlistId: number) => {
-    const prev = [...items]; // save prev if needed
+    const prev = [...items];
     setItems((s) => s.filter((i) => i.wishlist_id !== wishlistId));
+
     try {
-      const res = await fetch(`/api/wishlist/${wishlistId}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("delete failed");
+      const res = await fetch(`/api/wishlist/${wishlistId}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) throw new Error("Delete failed");
     } catch (e) {
       console.error(e);
-      setItems(prev); // rollback
       alert("Could not remove item");
+      setItems(prev); // rollback on failure
     }
   };
 
   return (
-    <>
-      <Header />
-      <main className={`${styles.wishlistContainer} ${items.length > 0 ? styles.hasItems : ""}`}>
-        <h1 className={styles.wishlistHeading}>My Wishlist</h1>
+    <main
+      className={`${styles.wishlistContainer} ${
+        items.length > 0 ? styles.hasItems : ""
+      }`}
+    >
+      <h1 className={styles.wishlistHeading}>Wishlist</h1>
+      <p className={styles.wishlistIntro}>
+        Books you’re interested in and want to keep track of.
+      </p>
 
-        <div className={styles.wishlistGrid}>
-          {/* Plus card */}
-          <article className={styles.wishlistPlusCard}>
-            <div className={styles.wishlistThumb}>
-              <div className={styles.plusWrapper}>
-                <Link href="/catalog" aria-label="Add a book to wishlist">+</Link>
-              </div>
+      <div className={styles.wishlistGrid}>
+        {/* Add-book Card */}
+        <article className={styles.wishlistPlusCard}>
+          <div className={styles.plusWrapper}>
+            <Link href="/catalog" aria-label="Add a book to wishlist">
+              +
+            </Link>
+          </div>
+          <div className={styles.wishlistCardBody}>
+            <h2 className={styles.wishlistTitle}>Add a book</h2>
+            <p className={styles.wishlistMeta}>Browse catalog to add books</p>
+            <div className={styles.wishlistActions}>
+              <Link href="/catalog" className={styles.wishlistButton}>
+                Browse Catalog
+              </Link>
             </div>
+          </div>
+        </article>
+
+        {/* Wishlist Items */}
+        {items.map((book) => (
+          <article className={styles.wishlistCard} key={book.wishlist_id}>
+            <div className={styles.wishlistThumb}>
+              {book.image_url ? (
+                <Image
+                  src={book.image_url}
+                  alt={book.title}
+                  fill
+                  sizes="(max-width: 600px) 100vw, 240px"
+                  style={{ objectFit: "cover" }}
+                />
+              ) : (
+                <div className={styles.wishlistPlaceholder}>No image</div>
+              )}
+            </div>
+
             <div className={styles.wishlistCardBody}>
-              <h2 className={styles.wishlistTitle}>Add a book</h2>
-              <p className={styles.wishlistMeta}>Browse catalog to add books</p>
+              <h2 className={styles.wishlistTitle}>{book.title}</h2>
+
+              <p className={styles.wishlistMeta}>
+                <strong>Author:</strong> {book.author}
+              </p>
+              <p className={styles.wishlistMeta}>
+                <strong>Genre:</strong> {book.genre}
+              </p>
+
+              <p className={styles.wishlistDescription}>
+                {book.description?.length > 220
+                  ? `${book.description.slice(0, 220)}…`
+                  : book.description}
+              </p>
+
               <div className={styles.wishlistActions}>
-                <Link href="/catalog" className={styles.wishlistButton}>Browse catalog</Link>
+                <button
+                  className={styles.wishlistButton}
+                  onClick={() => remove(book.wishlist_id)}
+                >
+                  Remove
+                </button>
+                <Link href="/catalog" className={styles.wishlistButtonOutline}>
+                  Browse
+                </Link>
               </div>
             </div>
           </article>
+        ))}
+      </div>
 
-          {/* Wishlist items */}
-          {items.map((book) => (
-            <article className={styles.wishlistCard} key={book.wishlist_id}>
-              <div className={styles.wishlistThumb}>
-                {book.image_url ? (
-                  <Image
-                    src={book.image_url}
-                    alt={book.title}
-                    fill
-                    sizes="(max-width: 600px) 100vw, 240px"
-                    style={{ objectFit: "cover" }}
-                  />
-                ) : (
-                  <div className={styles.wishlistPlaceholder}>No image</div>
-                )}
-              </div>
-              <div className={styles.wishlistCardBody}>
-                <h2 className={styles.wishlistTitle}>{book.title}</h2>
-                <p className={styles.wishlistMeta}><strong>Author:</strong> {book.author}</p>
-                <p className={styles.wishlistMeta}><strong>Genre:</strong> {book.genre}</p>
-                <p className={styles.wishlistDescription}>
-                  {book.description?.length > 220 ? `${book.description.slice(0, 220)}…` : book.description}
-                </p>
-                <div className={styles.wishlistActions}>
-                  <button className={styles.wishlistButton} onClick={() => remove(book.wishlist_id)}>Remove</button>
-                  <Link href="/catalog" className={styles.wishlistButtonOutline}>Browse</Link>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        {loading && <div className={styles.wishlistCenter}>Loading wishlist…</div>}
-        {error && <div className={styles.wishlistCenterError}>{error}</div>}
-      </main>
-      <Footer />
-    </>
+      {loading && (
+        <div className={styles.wishlistCenter}>Loading wishlist…</div>
+      )}
+      {error && (
+        <div className={styles.wishlistCenterError}>{error}</div>
+      )}
+    </main>
   );
 }

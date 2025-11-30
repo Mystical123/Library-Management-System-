@@ -1,92 +1,87 @@
 "use client";
-import { FormEvent, useState } from "react";
-import emailjs from "emailjs-com";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import styles from "./contact.module.css";
 
-// using emailjs to handle all emails 
+import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 
 export default function ContactPage() {
-  const [status, setStatus] = useState<string>("");
-  const [statusType, setStatusType] = useState<"success" | "error" | "">("");
+  const formRef = useRef<HTMLFormElement>(null);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!formRef.current) return;
 
-    const form = e.target as HTMLFormElement;
-
-    emailjs
-      .sendForm(
-        "service_wp5032e", // Service ID
-        "template_0kqcepg", // Template ID
-        form,
-        "KyHI9y3Pnfv8APkGw" // Public Key
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          setStatus("Message sent!");
-          setStatusType("success");
-          form.reset();
-        },
-        (error) => {
-          console.error(error.text);
-          setStatus("Failed to send message");
-          setStatusType("error");
-        }
+    try {
+      await emailjs.sendForm(
+        "service_wp5032e",     
+        "template_0kqcepg",    
+        formRef.current,
+        "KyHI9y3Pnfv8APkGw"       
       );
+
+      setStatus("success");
+      formRef.current.reset();
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setStatus("error");
+    }
   };
 
   return (
-    <>
-      <Header />
+    <main className="max-w-3xl mx-auto py-20 px-6">
+      <h1 className="page-title mb-3">Contact Us</h1>
+      <p className="page-intro mb-10">
+        Have questions or feedback? Fill out the form and we’ll get back to you.
+      </p>
 
-      <main className={styles["contact-page"]}>
-        <section className="contact-form-section">
-          <h2>Contact Us</h2>
-          <p>
-            If you have questions, feedback, or issues, send us a message and our team will respond as soon as possible.
-          </p>
+      <form
+        ref={formRef}
+        onSubmit={sendEmail}
+        className="contact-form-container flex flex-col gap-6"
+      >
+        <div>
+          <label className="contact-label">Full Name</label>
+          <input
+            name="user_name"
+            required
+            className="contact-input"
+            placeholder="Your Name"
+          />
+        </div>
 
-          <form id="contact-form" className="contact-form" onSubmit={handleSubmit}>
-            <div className="field">
-              <label htmlFor="name">Name</label>
-              <input type="text" id="name" name="name" required />
-            </div>
+        <div>
+          <label className="contact-label">Email Address</label>
+          <input
+            name="user_email"
+            type="email"
+            required
+            className="contact-input"
+            placeholder="example@gmail.com"
+          />
+        </div>
 
-            <div className="field">
-              <label htmlFor="email">Email</label>
-              <input type="email" id="email" name="email" required />
-            </div>
+        <div>
+          <label className="contact-label">Message</label>
+          <textarea
+            name="message"
+            required
+            className="contact-textarea"
+            placeholder="Write your message…"
+            rows={6}
+          />
+        </div>
 
-            <div className="field">
-              <label htmlFor="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" />
-            </div>
+        <button className="primary-link" type="submit">
+          Send Message
+        </button>
 
-            <div className="field full">
-              <label htmlFor="message">Message</label>
-              <textarea id="message" name="message" rows={6} required />
-            </div>
-
-            <div className="field full">
-              <button type="submit">Send Message</button>
-            </div>
-          </form>
-
-          <p
-            id="form-status"
-            className={`muted ${statusType === "success" ? "success" : ""} ${statusType === "error" ? "error" : ""}`}
-            aria-live="polite"
-          >
-            {status}
-          </p>
-        </section>
-      </main>
-
-      <Footer />
-    </>
+        {status === "success" && (
+          <p className="text-green-700">Message sent successfully!</p>
+        )}
+        {status === "error" && (
+          <p className="text-red-700">Message failed to send.</p>
+        )}
+      </form>
+    </main>
   );
 }
-

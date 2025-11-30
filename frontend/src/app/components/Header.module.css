@@ -1,91 +1,58 @@
-/* ===== HEADER MODULE CSS ===== */
+/* ===== HEADER (Warm Ivory Library Theme) ===== */
 
-/* Header container */
-.siteHeader {
-  border-bottom: 1px solid var(--border-sand, #e0d2b6);
-  background-color: var(--bg-ivory, #f6f1e8);
-  color: var(--deep-brown, #2e241a);
+.header {
   width: 100%;
+  background: #f5efe3; /* soft ivory */
+  border-bottom: 1px solid #e3d5c3; /* faint warm border */
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-/* Navigation layout */
-.siteNav {
-  max-width: 1120px;
+/* Container */
+.navbar {
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0.9rem 1.5rem;
+  padding: 1rem 2rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  justify-content: space-between;
 }
 
-/* Left side - logo */
-.navLeft .siteLogo {
+/* Left Logo Section */
+.logoBlock {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-  text-decoration: none;
+  line-height: 1.1;
 }
 
-.siteLogoTitle {
-  font-size: 1.25rem; /* larger than subtitle */
+.logoTitle {
+  font-size: 0.95rem;
   font-weight: 700;
-  color: #7c3aed; /* purple color from his header */
+  color: #7c3aed; /* purple accent */
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-.siteLogoSubtitle {
-  font-size: 0.85rem;
-  font-weight: 400;
-  color: var(--deep-brown, #2e241a);
-  margin-top: -2px;
+.logoSubtitle {
+  font-size: 0.75rem;
+  color: #5b4630; /* deep brown */
+  opacity: 0.9;
 }
 
-/* Right side - links and buttons */
-.navRight {
+/* Navigation Links */
+.navLinks {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
+  gap: 1.8rem;
 }
 
-/* Right side links */
-.navRight a {
-  background: transparent;
-  color: var(--deep-brown, #2e241a);
+.navLinks a {
   text-decoration: none;
-  padding: 0.45rem 0.9rem;
-  border-radius: 6px;
-  font-weight: 500;
-  transition: background 0.2s ease, color 0.2s ease;
+  font-size: 0.95rem;
+  color: #3b2f22;
+  transition: color 0.2s ease;
 }
 
-.navRight a:hover {
-  background: var(--bg-sand, #e4d5b7);
-  color: var(--deep-brown, #2e241a);
-}
-
-/* Ghost buttons for login/cart */
-.ghost {
-  background: transparent;
-  color: var(--deep-brown, #2e241a);
-  border: 1px solid var(--deep-brown, #2e241a);
-  border-radius: 6px;
-  padding: 0.45rem 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.ghost:hover {
-  background: var(--bg-sand, #e4d5b7);
-  color: var(--deep-brown, #2e241a);
-}
-
-/* Cart count badge */
-#cart-count {
-  margin-left: 0.25rem;
-  font-weight: 600;
+.navLinks a:hover {
+  color: #7c3aed; /* purple highlight on hover */
 }
