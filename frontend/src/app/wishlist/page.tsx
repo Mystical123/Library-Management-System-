@@ -34,6 +34,15 @@ export default function WishlistPage() {
     fetchWishlist();
   }, []);
 
+  // Listen for wishlist changes dispatched from other pages/components
+  useEffect(() => {
+    const onWishlistChanged = () => {
+      fetchWishlist();
+    };
+    window.addEventListener("wishlist:changed", onWishlistChanged);
+    return () => window.removeEventListener("wishlist:changed", onWishlistChanged);
+  }, []);
+
   // Remove an item from wishlist
   const remove = async (wishlistId: number) => {
     const prev = [...items];

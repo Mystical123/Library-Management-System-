@@ -78,12 +78,19 @@ export default function CatalogPage() {
         body: JSON.stringify({ book_id: bookId }),
       });
       if (!res.ok) throw new Error("Failed to add");
+
+      // local update so button shows "Added" immediately
       setWishlistIds(new Set([...wishlistIds, bookId]));
+
+      // notify other components/pages in this tab to refresh their data
+      window.dispatchEvent(new Event("wishlist:changed"));
     } catch (err: unknown) {
       console.error(err);
       alert("Could not add to wishlist");
     }
   };
+
+
 
   const renderWishlistButton = (book: Book) => {
     const added = wishlistIds.has(book.id);
